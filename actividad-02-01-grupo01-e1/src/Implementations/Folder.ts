@@ -1,11 +1,13 @@
 import { FileSystemObject } from '../Abstractions/FileSystemObject'
+import { ElementType } from '../Enums/ElementType'
 
 export class Folder extends FileSystemObject {
     elements: FileSystemObject[] = [];
 
     public constructor(name: string) {
-        super('folder', 0, name);
+        super(ElementType.FOLDER, 0, name);
     }
+
 
     public add(component: FileSystemObject): void {
         this.elements.push(component);

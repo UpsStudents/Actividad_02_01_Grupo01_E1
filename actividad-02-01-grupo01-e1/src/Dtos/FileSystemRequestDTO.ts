@@ -1,7 +1,7 @@
 import { ElementType } from '../Enums/ElementType'
 
 export class FileSystemRequestDTO {
-  objetos: FolderDTO[] | FileDTO[];
+  FileSystemObject: FolderDTO[] | FileDTO[];
 }
 
 export class FolderDTO {

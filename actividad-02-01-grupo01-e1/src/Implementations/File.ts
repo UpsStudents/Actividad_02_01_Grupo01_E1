@@ -1,7 +1,8 @@
 import { FileSystemObject } from '../Abstractions/FileSystemObject'
+import { ElementType } from '../Enums/ElementType'
 
 export class File extends FileSystemObject {
-  public constructor(type: string, size: number, name: string) {
+  public constructor(type: ElementType, size: number, name: string) {
     super(type, size, name);
   }
 

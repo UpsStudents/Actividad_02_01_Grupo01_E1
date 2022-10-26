@@ -1,11 +1,13 @@
+import { ElementType } from '../Enums/ElementType'
+
 export abstract class FileSystemObject {
   parent!: FileSystemObject | null;
   id: number;
   size: number;
-  type: string;
+  type: ElementType;
   name: string;
 
-  public constructor(type: string, size: number, name: string) {
+  public constructor(type: ElementType, size: number, name: string) {
     this.type = type;
     this.size = size;
     this.name = name;
