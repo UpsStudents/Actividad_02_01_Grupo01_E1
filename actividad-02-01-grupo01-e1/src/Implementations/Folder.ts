@@ -1,24 +1,21 @@
-import { Element } from '../Abstractions/Element'
+import { FileSystemObject } from '../Abstractions/FileSystemObject'
 
-export class Folder extends Element {
-    elements: Element[] = [];
+export class Folder extends FileSystemObject {
+    elements: FileSystemObject[] = [];
 
     public constructor(name: string) {
-        super('', 0, name);
+        super('folder', 0, name);
     }
 
-    public add(component: Element): void {
-        console.log("ingresa en");
+    public add(component: FileSystemObject): void {
         this.elements.push(component);
-        component.setParent(this);
-        console.log("Done!");
+        component.setParent(this);        
     }
 
-    public remove(component: Element): void {
+    public remove(component: FileSystemObject): void {
         const componentIndex = this.elements.indexOf(component);
         this.elements.splice(componentIndex, 1);
         component.setParent(null);
-        console.log("Done!");
     }
 
     public isComposite(): boolean {

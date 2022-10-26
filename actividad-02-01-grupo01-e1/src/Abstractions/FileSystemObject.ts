@@ -1,5 +1,6 @@
-export abstract class Element {
-  parent!: Element | null;
+export abstract class FileSystemObject {
+  parent!: FileSystemObject | null;
+  id: number;
   size: number;
   type: string;
   name: string;
@@ -10,21 +11,21 @@ export abstract class Element {
     this.name = name;
   }
 
-  setParent(parent: Element | null) {
+  setParent(parent: FileSystemObject | null) {
     this.parent = parent;
   }
 
-  getParent(): Element | null {
+  getParent(): FileSystemObject | null {
     return this.parent;
   }
 
-  public add(component: Element): void {
+  public add(component: FileSystemObject): void {
     if (!this.isComposite()) {
       console.log('This is not a folder');
     }
   }
 
-  public remove(component: Element): void {
+  public remove(component: FileSystemObject): void {
     if (!this.isComposite()) {
       console.log('This is not a folder');
     }
