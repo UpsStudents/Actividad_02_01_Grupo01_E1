@@ -17,7 +17,6 @@ export class AppService {
   mapper(objeto: FileSystemRequestDTO ): FileSystemObject {
     let rootFolder = new Folder("ROOT");
     
-    
     return rootFolder;
   }
 

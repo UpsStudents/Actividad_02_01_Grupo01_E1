@@ -1,5 +1,6 @@
 import { Body, ClassSerializerInterceptor, Controller, Get, Post, Redirect } from '@nestjs/common';
 import e from 'express';
+import { domainToASCII, fileURLToPath } from 'url';
 import { AppService } from './app.service';
 import { FileSystemRequestDTO } from './Dtos/FileSystemRequestDTO';
 import { ElementType } from './Enums/ElementType';
@@ -33,17 +34,21 @@ export class AppController {
       }      
     });
     console.log(newFileSystemObject);
-    return "Hola Mundo"
+    
 
 }
 
   @Post()
   @Redirect('/')
   async createAsset(@Body() body: FileSystemRequestDTO) {
-
+    let rootFolder = new Folder("Root");
+    let folder = FileSystemRequestDTO.mapper(body);
+    rootFolder.add(folder);
     body.FileSystemObject.forEach(element => {
       console.log(element);
     });
 
   }
+
+  
 }
