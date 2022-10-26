@@ -1,18 +1,13 @@
-import { ElementType } from '../Enums/ElementType'
+import { ElementType } from '../Enums/ElementType';
 
 export class FileSystemRequestDTO {
-  FileSystemObject: FolderDTO[] | FileDTO[];
-}
-
-export class FolderDTO {
-  name: string;
-  type: string;
-  size: number;
-  children: Object[];
+  files: FileDTO[] = [];
 }
 
 export class FileDTO {
+  id: number;
   name: string;
   type: ElementType;
   size: number;
+  children: FileDTO[] | null;
 }

@@ -1,44 +1,77 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource, EntityManager } from 'typeorm';
-import { fileURLToPath } from 'url';
 import { FileSystemObject } from './Abstractions/FileSystemObject';
-import { FileSystemRequestDTO } from './Dtos/FileSystemRequestDTO';
+import { FileDTO } from './Dtos/FileSystemRequestDTO';
 import { Folder } from './Implementations/Folder';
+import { File } from './Implementations/File';
 import { Content } from './Models/Content';
+import { ElementType } from './Enums/ElementType';
 
 @Injectable()
 export class AppService {
-  // para implementar
-  static mapper(body: FileSystemRequestDTO): FileSystemObject {
-    let rootFolder = new Folder("ROOT");
-    
-    return rootFolder;
+  private _manager: EntityManager;
+  constructor(private manager: EntityManager, private dataSource: DataSource) {
+    this._manager = manager;
   }
-  constructor(private manager: EntityManager, private dataSource: DataSource) { }
 
   getHello(): string {
     return 'Hello World!';
   }
 
- 
-
-  async create(folder: Folder | FileSystemObject) {
-    const created = this.manager.create(Content, {
-      id: 0,
-      name: folder.name,
-      size: Number(folder.getSize()),
-      type: folder.type,
-      parent: folder.parent
-    });
-
-    await this.manager.save(created);
-
-    if (folder.isComposite()) {
-      (folder as Folder).children.forEach(async child => {
-        child.parent.id = created.id;
-          await this.create(child)        
+  async create(files: FileSystemObject[]) {
+    console.log('conversión');
+    console.log(files);
+    console.log('lectura');
+    files.forEach(async (file) => {
+      console.log(file);
+      console.log('next');
+      const created = this._manager.create(Content, {
+        id: file.id,
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        parent: file.parent ?? null,
       });
-
-    }
+      await this.manager.save(created);
+      console.log('guardado');
+      if (file.isComposite() && (file as Folder).children.length > 0) {
+        (file as Folder).children.forEach((child) => {
+          child.parent = new Folder(created.id, created.name);
+        });
+        await this.create((file as Folder).children);
+      }
+    });
   }
+}
+
+export function mapper(body: FileDTO[]): FileSystemObject[] {
+  const children: FileSystemObject[] = [];
+  body.forEach(function (child) {
+    console.log(child);
+    switch (child.type) {
+      case ElementType.DOCX:
+      case ElementType.PDF:
+      case ElementType.XLSX:
+        const file = new File(
+          child.id ?? 0,
+          child.type,
+          child.size,
+          child.name,
+        );
+        children.push(file);
+        break;
+      case ElementType.FOLDER:
+        const folder = new Folder(child.id ?? 0, child.name);
+        console.log(child.children);
+        if (Array.isArray(child.children)) {
+          folder.children = mapper(child.children);
+          folder.size = folder.getSize();
+        }
+        children.push(folder);
+      default:
+        break;
+    }
+  });
+
+  return children;
 }

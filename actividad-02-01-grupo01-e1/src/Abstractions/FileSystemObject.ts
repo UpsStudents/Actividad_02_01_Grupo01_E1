@@ -1,4 +1,4 @@
-import { ElementType } from '../Enums/ElementType'
+import { ElementType } from '../Enums/ElementType';
 
 export abstract class FileSystemObject {
   parent!: FileSystemObject | null;
@@ -7,7 +7,8 @@ export abstract class FileSystemObject {
   type: ElementType;
   name: string;
 
-  public constructor(type: ElementType, size: number, name: string) {
+  public constructor(id = 0, type: ElementType, size: number, name: string) {
+    this.id = id;
     this.type = type;
     this.size = size;
     this.name = name;

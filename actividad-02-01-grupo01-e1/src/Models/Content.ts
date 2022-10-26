@@ -1,4 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn, TreeChildren, TreeParent } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  TreeChildren,
+  TreeParent,
+} from 'typeorm';
 
 @Entity()
 export class Content {

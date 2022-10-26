@@ -10,11 +10,11 @@ config();
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: "localhost",
-      port: 5432,
-      username: "dev_admin",
-      password: "secret",
-      database: "olympus",
+      host: 'localhost',
+      port: 5430,
+      username: 'dev_admin',
+      password: 'secret',
+      database: 'olympus',
       entities: [Content],
       synchronize: true,
     }),
