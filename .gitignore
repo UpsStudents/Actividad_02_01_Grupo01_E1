@@ -1,7 +1,8 @@
 # compiled output
 /dist
 /node_modules
-
+actividad-02-01-grupo01-e1/node_modules/
+actividad-02-01-grupo01-e1/dist/
 # Logs
 logs
 *.log
