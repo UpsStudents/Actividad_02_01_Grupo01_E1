@@ -8,17 +8,19 @@ import { Content } from './Models/Content';
 
 @Injectable()
 export class AppService {
+  // para implementar
+  static mapper(body: FileSystemRequestDTO): FileSystemObject {
+    let rootFolder = new Folder("ROOT");
+    
+    return rootFolder;
+  }
   constructor(private manager: EntityManager, private dataSource: DataSource) { }
 
   getHello(): string {
     return 'Hello World!';
   }
 
-  mapper(objeto: FileSystemRequestDTO ): FileSystemObject {
-    let rootFolder = new Folder("ROOT");
-    
-    return rootFolder;
-  }
+ 
 
   async create(folder: Folder | FileSystemObject) {
     const created = this.manager.create(Content, {
