@@ -21,10 +21,9 @@ export class AppService {
   async create(files: FileSystemObject[]) {
     console.log('conversión');
     console.log(files);
-    console.log('lectura');
     files.forEach(async (file) => {
-      console.log(file);
       console.log('next');
+      console.log(file);
       const created = this._manager.create(Content, {
         id: file.id,
         name: file.name,
@@ -47,7 +46,6 @@ export class AppService {
 export function mapper(body: FileDTO[]): FileSystemObject[] {
   const children: FileSystemObject[] = [];
   body.forEach(function (child) {
-    console.log(child);
     switch (child.type) {
       case ElementType.DOCX:
       case ElementType.PDF:
@@ -62,7 +60,6 @@ export function mapper(body: FileDTO[]): FileSystemObject[] {
         break;
       case ElementType.FOLDER:
         const folder = new Folder(child.id ?? 0, child.name);
-        console.log(child.children);
         if (Array.isArray(child.children)) {
           folder.children = mapper(child.children);
           folder.size = folder.getSize();

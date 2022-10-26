@@ -7,9 +7,8 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  @Redirect('/')
   async Test() {
-    console.log('hello world');
+    console.log('hello world!');
   }
 
   @Post()
@@ -17,6 +16,6 @@ export class AppController {
   async createAsset(@Body() body: FileSystemRequestDTO) {
     console.log(body);
     const files = mapper(body.files);
-    this.appService.create(files);
+    await this.appService.create(files);
   }
 }
