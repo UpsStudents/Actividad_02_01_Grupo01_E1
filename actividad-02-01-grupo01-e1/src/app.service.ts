@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource, EntityManager } from 'typeorm';
+import { fileURLToPath } from 'url';
 import { FileSystemObject } from './Abstractions/FileSystemObject';
+import { FileSystemRequestDTO } from './Dtos/FileSystemRequestDTO';
 import { Folder } from './Implementations/Folder';
 import { Content } from './Models/Content';
 
@@ -10,6 +12,13 @@ export class AppService {
 
   getHello(): string {
     return 'Hello World!';
+  }
+
+  mapper(objeto: FileSystemRequestDTO ): FileSystemObject {
+    let rootFolder = new Folder("ROOT");
+    
+    
+    return rootFolder;
   }
 
   async create(folder: Folder | FileSystemObject) {
@@ -24,7 +33,7 @@ export class AppService {
     await this.manager.save(created);
 
     if (folder.isComposite()) {
-      (folder as Folder).elements.forEach(async child => {
+      (folder as Folder).children.forEach(async child => {
         child.parent.id = created.id;
           await this.create(child)        
       });

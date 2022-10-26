@@ -1,4 +1,5 @@
 import { Body, ClassSerializerInterceptor, Controller, Get, Post, Redirect } from '@nestjs/common';
+import e from 'express';
 import { AppService } from './app.service';
 import { FileSystemRequestDTO } from './Dtos/FileSystemRequestDTO';
 import { ElementType } from './Enums/ElementType';
@@ -13,30 +14,25 @@ export class AppController {
   @Get()
   @Redirect('/')
   async  Test(){
-  let folder = new Folder("Root");
-
-    let exampleObject = {
-      name: "Archivo1",
-      type: ElementType.DOCX,
-      size: 1200,
-    }
-
-    let exampleFolder = [{
-      name: "Archivo1",
-      type: ElementType.FOLDER,
-      size: 0,
-      children: [exampleObject],
-    }]
-    exampleFolder.forEach(element => {
+    let rootFolder = new Folder("Root");
+    let exampleObject =  new File(ElementType.DOCX, 1200, "Archivo1");
+    let exampleFolder = new Folder('Folder1')
+    exampleFolder.add(exampleObject);
+    
+    let newFileSystemObject = new Folder("dato");  
+    
+    rootFolder.add(exampleFolder)
+    rootFolder.children.forEach(element  => { 
       if (element.type == ElementType.FOLDER) {
         let folderInterno = new Folder(element.name)
+        newFileSystemObject.add(folderInterno);
       }
       else {
-        let folderInterno = new File(element.type, element.size, element.name);
-      }
-      console.log(element);
-
+        let FileInterno = new File(element.type, element.size, element.name);
+        newFileSystemObject.add(FileInterno);
+      }      
     });
+    console.log(newFileSystemObject);
     return "Hola Mundo"
 
 }

@@ -2,7 +2,7 @@ import { FileSystemObject } from '../Abstractions/FileSystemObject'
 import { ElementType } from '../Enums/ElementType'
 
 export class Folder extends FileSystemObject {
-    elements: FileSystemObject[] = [];
+    children: FileSystemObject[] = [];
 
     public constructor(name: string) {
         super(ElementType.FOLDER, 0, name);
@@ -10,13 +10,13 @@ export class Folder extends FileSystemObject {
 
 
     public add(component: FileSystemObject): void {
-        this.elements.push(component);
+        this.children.push(component);
         component.setParent(this);        
     }
 
     public remove(component: FileSystemObject): void {
-        const componentIndex = this.elements.indexOf(component);
-        this.elements.splice(componentIndex, 1);
+        const componentIndex = this.children.indexOf(component);
+        this.children.splice(componentIndex, 1);
         component.setParent(null);
     }
 
@@ -27,7 +27,7 @@ export class Folder extends FileSystemObject {
     public getSize(): number {
         let totalSize: number = 0;
 
-        this.elements.forEach(function (element) {
+        this.children.forEach(function (element) {
             totalSize += element.getSize();
         })
 
@@ -36,7 +36,7 @@ export class Folder extends FileSystemObject {
 
     public getName(): string {
         const results = [];
-        for (const child of this.elements) {
+        for (const child of this.children) {
             results.push(child.getName());
         }
 
