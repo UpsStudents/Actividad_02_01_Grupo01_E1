@@ -2,11 +2,13 @@ import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
+  Tree,
   TreeChildren,
   TreeParent,
 } from 'typeorm';
 
 @Entity()
+@Tree('nested-set')
 export class Content {
   @PrimaryGeneratedColumn()
   id: number;

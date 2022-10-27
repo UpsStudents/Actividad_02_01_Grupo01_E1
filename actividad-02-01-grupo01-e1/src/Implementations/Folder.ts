@@ -4,8 +4,8 @@ import { ElementType } from '../Enums/ElementType';
 export class Folder extends FileSystemObject {
   children: FileSystemObject[] = [];
 
-  public constructor(id = 0, name: string) {
-    super(id, ElementType.FOLDER, 0, name);
+  public constructor(id = 0, name: string, size = 0, parent = null) {
+    super(id, ElementType.FOLDER, size, name, parent);
   }
 
   public add(component: FileSystemObject): void {

@@ -2,8 +2,14 @@ import { FileSystemObject } from '../Abstractions/FileSystemObject';
 import { ElementType } from '../Enums/ElementType';
 
 export class File extends FileSystemObject {
-  public constructor(id = 0, type: ElementType, size: number, name: string) {
-    super(id, type, size, name);
+  public constructor(
+    id = 0,
+    type: ElementType,
+    size: number,
+    name: string,
+    parent = null,
+  ) {
+    super(id, type, size, name, parent);
   }
 
   public getSize(): number {

@@ -7,11 +7,18 @@ export abstract class FileSystemObject {
   type: ElementType;
   name: string;
 
-  public constructor(id = 0, type: ElementType, size: number, name: string) {
+  public constructor(
+    id = 0,
+    type: ElementType,
+    size: number,
+    name: string,
+    parent = null,
+  ) {
     this.id = id;
     this.type = type;
     this.size = size;
     this.name = name;
+    this.parent = parent;
   }
 
   setParent(parent: FileSystemObject | null) {

@@ -1,5 +1,9 @@
 import { Body, Controller, Get, Post, Redirect } from '@nestjs/common';
-import { AppService, mapper } from './app.service';
+import {
+  AppService,
+  mapperDtoToFileObject,
+  mapperObjectToDto,
+} from './app.service';
 import { FileSystemRequestDTO } from './Dtos/FileSystemRequestDTO';
 
 @Controller()
@@ -8,14 +12,13 @@ export class AppController {
 
   @Get()
   async Test() {
-    console.log('hello world!');
+    const files = await this.appService.findAll();
+    return files;
   }
 
   @Post()
-  @Redirect('/')
   async createAsset(@Body() body: FileSystemRequestDTO) {
-    console.log(body);
-    const files = mapper(body.files);
+    const files = mapperDtoToFileObject(body.files);
     await this.appService.create(files);
   }
 }
