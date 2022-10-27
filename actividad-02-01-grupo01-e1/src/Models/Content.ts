@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-@Tree('nested-set')
+@Tree('closure-table')
 export class Content {
   @PrimaryGeneratedColumn()
   id: number;
