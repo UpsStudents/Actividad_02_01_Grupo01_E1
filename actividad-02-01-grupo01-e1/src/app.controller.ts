@@ -13,7 +13,7 @@ export class AppController {
   @Get()
   async Test() {
     const files = await this.appService.findAll();
-    return files;
+    return { files: files };
   }
 
   @Post()
